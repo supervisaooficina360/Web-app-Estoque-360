@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0867c9">
+<title>Controle de Estoque 360</title>
+<style>
+:root{--blue:#0867c9;--blue2:#0b57a7;--green:#12b886;--orange:#ff9217;--purple:#5d46dc;--bg:#f3f7fb;--text:#15324b;--muted:#6d8295;--card:#fff;--line:#dce7f0;--danger:#e74c3c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh}.top{height:78px;background:linear-gradient(135deg,#0b67c9,#0755a8);color:#fff;display:flex;align-items:center;gap:12px;padding:0 18px;position:sticky;top:0;z-index:20;box-shadow:0 3px 12px #174a7a2e}.top h1{font-size:18px;margin:0;flex:1;text-align:center}.iconbtn{border:0;background:transparent;color:#fff;font-size:25px;width:40px;height:40px;border-radius:50%}.content{max-width:620px;margin:auto;padding:18px 16px 30px}.welcome{background:#fff;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:center;box-shadow:0 3px 14px #1b5b8820;margin-bottom:14px}.logo{width:48px;height:48px;border-radius:14px;background:#e9f4ff;display:grid;place-items:center;font-size:28px}.welcome strong{display:block;font-size:15px}.welcome small{color:var(--muted)}.menu{display:grid;gap:10px}.menu-card{border:0;color:#fff;border-radius:15px;padding:17px;display:flex;align-items:center;gap:13px;text-align:left;box-shadow:0 5px 13px #234b7020}.menu-card .mi{font-size:28px;width:42px;text-align:center}.menu-card b{font-size:15px}.menu-card small{display:block;opacity:.9;margin-top:4px}.os{background:linear-gradient(135deg,#1688ef,#0872db)}.task{background:linear-gradient(135deg,#0bbd9c,#0aa98e)}.return{background:linear-gradient(135deg,#ff9b1a,#f57f00)}.consult{background:linear-gradient(135deg,#674be5,#5640ce)}.voice-card{margin-top:12px;background:#e3f3ff;border-radius:14px;padding:13px;display:flex;align-items:center;gap:12px;color:#1160a7}.voice-card .mic{font-size:25px}.page-title{font-size:20px;margin:4px 0 16px}.panel{background:#fff;border-radius:16px;padding:15px;box-shadow:0 3px 14px #1b5b8820;margin-bottom:12px}.field{margin-bottom:12px}.field label{font-size:13px;font-weight:700;display:block;margin-bottom:6px}.inputrow{display:flex;gap:8px}.input,.select{width:100%;height:46px;border:1px solid #c9d9e6;border-radius:10px;padding:0 12px;outline:none;background:#fff}.input:focus{border-color:#1688ef;box-shadow:0 0 0 3px #1688ef18}.micbtn{width:48px;border:0;border-radius:10px;background:#0b72d8;color:#fff;font-size:20px}.primary{width:100%;border:0;background:#0873dc;color:#fff;border-radius:11px;height:48px;font-weight:700}.greenbtn{background:#0ab488}.orangebtn{background:#f58b08}.purplebtn{background:#5b45d8}.secondary{width:100%;border:1px solid #bcd2e3;background:#fff;color:#1267ad;border-radius:11px;height:44px;font-weight:700}.status{padding:11px;border-radius:10px;background:#e9f8f1;color:#16805d;font-size:13px;margin:10px 0}.status.err{background:#fff0ee;color:#bd3c2f}.searchbox{position:relative}.suggestions{position:absolute;left:0;right:0;top:52px;background:#fff;border:1px solid #d5e3ee;border-radius:10px;box-shadow:0 8px 20px #15324b20;z-index:10;overflow:hidden}.suggestion{padding:11px;border-bottom:1px solid #eef3f7;display:flex;justify-content:space-between;gap:8px}.suggestion:last-child{border-bottom:0}.suggestion b{font-size:13px}.suggestion small{display:block;color:var(--muted);margin-top:3px}.stock{font-size:12px;color:#176fb3;white-space:nowrap}.items{display:grid;gap:8px}.item{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfdff}.itemtop{display:flex;gap:8px}.itemtop .num{width:26px;height:26px;border-radius:50%;background:#075fb8;color:#fff;display:grid;place-items:center;font-size:12px;font-weight:bold}.itemtop .desc{flex:1;font-size:13px;font-weight:700}.itemmeta{color:var(--muted);font-size:11px;margin-left:34px;margin-top:2px}.itembottom{display:flex;gap:8px;align-items:center;margin-top:8px;margin-left:34px}.qty{width:95px;height:40px;border:1px solid #c8d9e5;border-radius:9px;padding:0 9px}.remove{border:0;background:#fff0ee;color:#d84b3e;width:40px;height:40px;border-radius:9px}.limit{font-size:12px;color:var(--muted);margin-bottom:9px}.summary{background:#eef7ff;border-radius:11px;padding:11px;font-size:13px}.order-found{background:#e9f8f1;border:1px solid #b8e7d5;color:#147c5b;padding:11px;border-radius:11px;font-size:13px;margin-bottom:12px}.order-item{border:1px solid var(--line);border-radius:12px;padding:10px}.order-item .row{display:flex;justify-content:space-between;gap:10px}.order-item b{font-size:13px}.order-item small{color:var(--muted)}.returnqty{width:90px;height:40px;border:1px solid #bdd2e2;border-radius:9px;text-align:center}.bottomnote{text-align:center;color:var(--muted);font-size:11px;margin-top:16px}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#16344e;color:#fff;padding:11px 15px;border-radius:10px;z-index:50;display:none;max-width:90%;font-size:13px}.modal{position:fixed;inset:0;background:#071a2a88;display:none;align-items:flex-end;justify-content:center;z-index:40}.modalbox{background:#fff;width:min(620px,100%);border-radius:20px 20px 0 0;padding:18px;max-height:80vh;overflow:auto}.modalbox h3{margin:0 0 12px}.modalactions{display:grid;gap:8px;margin-top:14px}@media(min-width:700px){.modal{align-items:center}.modalbox{border-radius:18px}.content{padding-top:25px}.menu{grid-template-columns:1fr 1fr}.voice-card{margin-top:14px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <button id="backBtn" class="iconbtn" style="visibility:hidden" aria-label="Voltar">‹</button>
+    <h1 id="topTitle">CONTROLE DE ESTOQUE</h1>
+    <button id="homeBtn" class="iconbtn" aria-label="Início">⌂</button>
+  </header>
+  <main id="content" class="content"></main>
+</div>
+<div id="toast" class="toast"></div>
+<div id="modal" class="modal"><div class="modalbox" id="modalBox"></div></div>
+<iframe name="postFrame" id="postFrame" style="display:none"></iframe>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbz6Wny7M5SlROez5SPKzxk3w49BU91y9eEiBe7fMXNSKAeCkf0uqUbq34Yy36uoWlBN/exec';
+const state = {page:'home', items:[], order:null, returnItems:[], voice:null};
+
+const $ = id => document.getElementById(id);
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function toast(msg){$('toast').textContent=msg;$('toast').style.display='block';clearTimeout(window._toast);window._toast=setTimeout(()=>$('toast').style.display='none',3000)}
+function apiReady(){if(API_URL.startsWith('COLE_')){toast('Configure a URL da API no app.js/index.html.');return false}return true}
+
+function jsonp(params){
+  return new Promise((resolve,reject)=>{
+    if(!apiReady()) return reject(new Error('API não configurada.'));
+    const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const script=document.createElement('script');
+    const qs=new URLSearchParams({...params,callback:cb});
+    const timer=setTimeout(()=>{cleanup();reject(new Error('Tempo esgotado ao consultar a planilha.'))},15000);
+    function cleanup(){clearTimeout(timer);delete window[cb];script.remove()}
+    window[cb]=data=>{cleanup();resolve(data)}
+    script.onerror=()=>{cleanup();reject(new Error('Não foi possível conectar à API.'))};
+    script.src=API_URL+'?'+qs.toString();
+    document.body.appendChild(script);
+  });
+}
+
+function post(payload){
+  return new Promise((resolve,reject)=>{
+    if(!apiReady()) return reject(new Error('API não configurada.'));
+    const form=document.createElement('form');
+    form.method='POST'; form.action=API_URL; form.target='postFrame'; form.style.display='none';
+    const input=document.createElement('input'); input.type='hidden'; input.name='payload'; input.value=JSON.stringify(payload);
+    form.appendChild(input);document.body.appendChild(form);form.submit();form.remove();
+
+    const started=Date.now();
+    const poll=async()=>{
+      try{
+        const r=await jsonp({action:'status',tx:payload.tx});
+        if(r.ok && (r.status==='CONCLUIDO'||r.status==='ERRO')) return r.status==='CONCLUIDO'?resolve(r.result||r):reject(new Error(r.message||'Falha na operação.'));
+      }catch(e){}
+      if(Date.now()-started>25000) return reject(new Error('A planilha não confirmou a operação no tempo esperado.'));
+      setTimeout(poll,1000);
+    };
+    setTimeout(poll,900);
+  });
+}
+
+function nav(page){
+  state.page=page;
+  if(page==='home') renderHome();
+  if(page==='os'||page==='task') renderBaixa(page);
+  if(page==='return') renderReturn();
+  if(page==='stock') renderStock();
+  $('backBtn').style.visibility=page==='home'?'hidden':'visible';
+  $('topTitle').textContent=page==='home'?'CONTROLE DE ESTOQUE':
+    page==='os'?'BAIXA POR OS':page==='task'?'BAIXA POR TAREFA':
+    page==='return'?'DEVOLUÇÃO':'ESTOQUE';
+}
+$('backBtn').onclick=()=>nav('home');$('homeBtn').onclick=()=>nav('home');
+
+function renderHome(){
+ $('content').innerHTML=`
+  <section class="welcome"><div class="logo">📦</div><div><strong>Bem-vindo ao Controle de Estoque</strong><small>Selecione uma opção abaixo:</small></div></section>
+  <section class="menu">
+    <button class="menu-card os" onclick="nav('os')"><span class="mi">🧾</span><span><b>BAIXA POR OS</b><small>Registrar materiais utilizados em uma Ordem de Serviço</small></span>›</button>
+    <button class="menu-card task" onclick="nav('task')"><span class="mi">🔧</span><span><b>BAIXA POR TAREFA</b><small>Registrar materiais utilizados em uma Ordem de Tarefa</small></span>›</button>
+    <button class="menu-card return" onclick="nav('return')"><span class="mi">↩️</span><span><b>DEVOLUÇÃO</b><small>Registrar materiais que não foram utilizados</small></span>›</button>
+    <button class="menu-card consult" onclick="nav('stock')"><span class="mi">🔎</span><span><b>CONSULTAR</b><small>Consultar estoque e disponibilidade</small></span>›</button>
+  </section>
+  <button class="voice-card" onclick="startVoice('home')"><span class="mic">🎙️</span><span><b>Comando de voz disponível</b><small>Diga: “Baixa OS 3952”, “Tarefa 7821” ou “Devolução OS 3952”.</small></span></button>
+  <div class="bottomnote">Grupo 360 Manutenção • Web App de estoque</div>`;
+}
+
+function renderBaixa(kind){
+  state.items=[];
+  const label=kind==='os'?'OS':'Tarefa', max=kind==='os'?15:20;
+  $('content').innerHTML=`
+   <h2 class="page-title">Baixa por ${label}</h2>
+   <section class="panel">
+    <div class="field"><label>Número da ${label}</label><div class="inputrow"><input id="orderNumber" class="input" inputmode="numeric" placeholder="${kind==='os'?'Ex.: 3952':'Ex.: 7821'}"><button class="micbtn" onclick="startVoice('${kind}')">🎙️</button></div></div>
+    <div class="field"><label>Quem vai receber o material</label><input id="receiver" class="input" placeholder="Nome do colaborador"></div>
+   </section>
+   <section class="panel">
+    <div class="limit">Materiais (máx. ${max} itens)</div>
+    <div class="searchbox"><input id="materialSearch" class="input" placeholder="Buscar por código ou descrição" oninput="searchMaterial(this.value)"><div id="suggestions" class="suggestions" style="display:none"></div></div>
+    <div id="items" class="items" style="margin-top:10px"></div>
+   </section>
+   <section class="panel">
+    <div class="summary" id="summary">Adicione os materiais utilizados nesta ${label.toLowerCase()}.</div>
+    <button class="primary" style="margin-top:10px" onclick="confirmBaixa('${kind}')">✓ CONFIRMAR BAIXA</button>
+   </section>`;
+}
+
+let searchTimer;
+async function searchMaterial(q){
+  clearTimeout(searchTimer);
+  const box=$('suggestions');
+  if(!q.trim()){box.style.display='none';return}
+  searchTimer=setTimeout(async()=>{
+    try{
+      const r=await jsonp({action:'products',q});
+      if(!r.ok) throw new Error(r.error);
+      box.innerHTML=r.products.map(p=>`<button class="suggestion" onclick='addItem(${JSON.stringify(p)})'><span><b>${esc(p.code)}</b><small>${esc(p.description)}</small></span><span class="stock">Est.: ${esc(p.stock)}<br>${esc(p.unit)}</span></button>`).join('')||'<div class="suggestion">Nenhum material encontrado.</div>';
+      box.style.display='block';
+    }catch(e){toast(e.message)}
+  },250);
+}
+
+function addItem(p){
+  const max=state.page==='os'?15:20;
+  if(state.items.length>=max){toast(`Limite de ${max} itens atingido.`);return}
+  if(state.items.some(x=>x.code===p.code)){toast('Esse material já foi adicionado.');return}
+  state.items.push({...p,qty:1,note:''});renderItems();
+  $('materialSearch').value='';$('suggestions').style.display='none';
+}
+function renderItems(){
+  const el=$('items');
+  if(!state.items.length){el.innerHTML='<div style="text-align:center;color:#789;font-size:13px;padding:16px">Nenhum material adicionado.</div>';return}
+  el.innerHTML=state.items.map((p,i)=>`
+   <div class="item">
+    <div class="itemtop"><span class="num">${i+1}</span><div class="desc">${esc(p.description)}</div><button class="remove" onclick="removeItem(${i})">🗑</button></div>
+    <div class="itemmeta">${esc(p.code)} • Estoque: ${esc(p.stock)} ${esc(p.unit)}</div>
+    <div class="itembottom"><input class="qty" type="number" min="0.001" step="any" value="${esc(p.qty)}" onchange="state.items[${i}].qty=Number(this.value)"><input class="input" style="height:40px" placeholder="Observação (opcional)" value="${esc(p.note)}" onchange="state.items[${i}].note=this.value"></div>
+   </div>`).join('');
+  $('summary').textContent=`${state.items.length} material(is) selecionado(s). Confira as quantidades antes de confirmar.`;
+}
+function removeItem(i){state.items.splice(i,1);renderItems()}
+
+function confirmBaixa(kind){
+ const number=$('orderNumber').value.replace(/\D/g,'');
+ const receiver=$('receiver').value.trim();
+ if(!number){toast('Informe o número da ordem.');return}
+ if(!receiver){toast('Informe quem vai receber o material.');return}
+ if(!state.items.length){toast('Adicione pelo menos um material.');return}
+ if(state.items.some(x=>!Number.isFinite(Number(x.qty))||Number(x.qty)<=0)){toast('Verifique as quantidades.');return}
+ openModal(`<h3>Confirmar baixa</h3><div class="summary"><b>${kind==='os'?'OS':'Tarefa'} ${esc(number)}</b><br>Recebedor: ${esc(receiver)}<br>Materiais: ${state.items.length}</div><div class="modalactions"><button class="primary" onclick="doBaixa('${kind}','${esc(number)}','${esc(receiver)}')">CONFIRMAR</button><button class="secondary" onclick="closeModal()">CANCELAR</button></div>`);
+}
+async function doBaixa(kind,number,receiver){
+ closeModal();toast('Enviando para a planilha...');
+ const tx='WEB-'+Date.now()+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
+ try{
+   const r=await post({action:'baixa',tx,type:kind,number,receiver,items:state.items.map(x=>({code:x.code,qty:Number(x.qty),unit:x.unit,note:x.note}))});
+   openModal(`<h3>✓ Baixa realizada</h3><div class="status">${esc(r.message||'Operação concluída.')}</div><button class="primary" onclick="closeModal();nav('${kind}')">NOVA BAIXA</button>`);
+ }catch(e){openModal(`<h3>Não foi possível concluir</h3><div class="status err">${esc(e.message)}</div><button class="secondary" onclick="closeModal()">FECHAR</button>`)}
+}
+
+function renderReturn(){
+ $('content').innerHTML=`
+  <h2 class="page-title">Devolução</h2>
+  <section class="panel">
+   <div class="field"><label>Tipo</label><div class="inputrow"><select id="returnType" class="select"><option value="os">OS</option><option value="tarefa">Tarefa</option></select><button class="micbtn" onclick="startVoice('return')">🎙️</button></div></div>
+   <div class="field"><label>Número da OS ou Tarefa</label><input id="returnNumber" class="input" inputmode="numeric" placeholder="Ex.: 3952"></div>
+   <button class="primary orangebtn" onclick="findOrder()">🔎 LOCALIZAR</button>
+  </section>
+  <section id="returnResult"></section>`;
+}
+async function findOrder(){
+ const type=$('returnType').value, number=$('returnNumber').value.replace(/\D/g,'');
+ if(!number){toast('Informe o número.');return}
+ $('returnResult').innerHTML='<section class="panel">Localizando materiais...</section>';
+ try{
+   const r=await jsonp({action:'order',type,number});
+   if(!r.ok) throw new Error(r.error);
+   state.order=r;state.returnItems=r.items.map(x=>({...x,qty:0}));renderReturnResult();
+ }catch(e){$('returnResult').innerHTML=`<section class="panel"><div class="status err">${esc(e.message)}</div></section>`}
+}
+function renderReturnResult(){
+ const r=state.order;
+ $('returnResult').innerHTML=`
+  <section class="panel">
+   <div class="order-found">✓ ${esc(r.label)} encontrada<br><small>Recebedor: ${esc(r.receiver||'Não informado')}</small></div>
+   <div class="items">${r.items.map((p,i)=>`
+    <div class="order-item"><div class="row"><div><b>${esc(p.description)}</b><br><small>${esc(p.code)} • Retirado: ${p.withdrawn} • Já devolvido: ${p.returned} • Disponível: ${p.available}</small></div><input class="returnqty" type="number" min="0" max="${p.available}" step="any" value="0" onchange="state.returnItems[${i}].qty=Number(this.value)"></div></div>`).join('')}</div>
+   <button class="primary greenbtn" style="margin-top:12px" onclick="confirmReturn()">✓ CONFIRMAR DEVOLUÇÃO</button>
+  </section>`;
+}
+function confirmReturn(){
+ const items=state.returnItems.filter(x=>Number(x.qty)>0).map(x=>({code:x.code,qty:Number(x.qty)}));
+ if(!items.length){toast('Informe pelo menos uma quantidade para devolver.');return}
+ openModal(`<h3>Confirmar devolução</h3><div class="summary">${items.length} material(is) voltarão ao estoque.</div><div class="modalactions"><button class="primary greenbtn" onclick="doReturn()">CONFIRMAR DEVOLUÇÃO</button><button class="secondary" onclick="closeModal()">CANCELAR</button></div>`);
+}
+async function doReturn(){
+ closeModal();toast('Registrando devolução...');
+ const tx='DEV-'+Date.now()+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
+ try{
+   const r=await post({action:'devolucao',tx,type:state.order.type,number:state.order.number,items:state.returnItems.filter(x=>x.qty>0).map(x=>({code:x.code,qty:Number(x.qty)}))});
+   openModal(`<h3>✓ Devolução realizada</h3><div class="status">${esc(r.message||'Materiais devolvidos ao estoque.')}</div><button class="primary" onclick="closeModal();nav('return')">NOVA DEVOLUÇÃO</button>`);
+ }catch(e){openModal(`<h3>Não foi possível concluir</h3><div class="status err">${esc(e.message)}</div><button class="secondary" onclick="closeModal()">FECHAR</button>`)}
+}
+
+function renderStock(){
+ $('content').innerHTML=`
+  <h2 class="page-title">Estoque</h2><section class="panel">
+   <div class="searchbox"><input id="stockSearch" class="input" placeholder="Buscar material, código ou marca" oninput="searchStock(this.value)"><div id="stockSug" class="suggestions" style="display:none"></div></div>
+  </section><section id="stockList" class="panel"><div style="color:#789;font-size:13px">Digite para consultar.</div></section>`;
+}
+let stockTimer;
+async function searchStock(q){
+ clearTimeout(stockTimer);const box=$('stockSug'),list=$('stockList');
+ if(!q.trim()){box.style.display='none';list.innerHTML='<div style="color:#789;font-size:13px">Digite para consultar.</div>';return}
+ stockTimer=setTimeout(async()=>{
+  try{const r=await jsonp({action:'products',q});if(!r.ok)throw new Error(r.error);
+   list.innerHTML=r.products.map(p=>`<div class="order-item" style="margin-bottom:8px"><div class="row"><div><b>${esc(p.description)}</b><br><small>${esc(p.code)} • ${esc(p.brand||'')}</small></div><b>${esc(p.stock)} ${esc(p.unit)}</b></div></div>`).join('')||'<div>Nenhum material.</div>';
+  }catch(e){toast(e.message)}
+ },250);
+}
+
+function openModal(html){$('modalBox').innerHTML=html;$('modal').style.display='flex'}
+function closeModal(){$('modal').style.display='none'}
+$('modal').onclick=e=>{if(e.target===$('modal'))closeModal()}
+
+function startVoice(context){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){toast('Comando de voz não é suportado neste navegador. Use Chrome no celular.');return}
+ const rec=new SR();state.voice=rec;rec.lang='pt-BR';rec.interimResults=false;rec.maxAlternatives=1;
+ toast('🎙️ Ouvindo...');
+ rec.onresult=e=>handleVoiceText(e.results[0][0].transcript,context);
+ rec.onerror=()=>toast('Não consegui entender o comando. Tente novamente.');
+ rec.start();
+}
+function handleVoiceText(text,context){
+ const t=spokenDigits(text.toLowerCase());
+ let type=t.includes('tarefa')?'tarefa':t.includes('os')?'os':'';
+ let number=(t.match(/\b\d{2,}\b/)||[])[0]||'';
+ if(!number){
+   const digits=(t.match(/\b\d\b/g)||[]);
+   if(digits.length>=2) number=digits.join('');
+ }
+ if(!number){toast('Diga algo como “OS três nove cinco dois”.');return}
+ const isReturn=t.includes('devolu')||context==='return';
+ if(context==='home'){
+   if(isReturn) nav('return'); else nav(type==='tarefa'?'task':'os');
+ } else if(context==='return'){
+   $('returnType').value=type||'os';$('returnNumber').value=number;findOrder();
+ } else {
+   if(type && ((context==='os'&&type!=='os')||(context==='task'&&type!=='tarefa'))) toast(`Comando reconhecido como ${type}.`);
+   $('orderNumber').value=number;
+ }
+}
+function digitWord(w){return ({zero:'0',um:'1',dois:'2',tres:'3','três':'3',quatro:'4',cinco:'5',seis:'6',sete:'7',oito:'8',nove:'9'})[w]??w}
+function spokenDigits(t){
+ return t.replace(/\bzero\b/g,' 0 ').replace(/\bum\b/g,' 1 ').replace(/\bdois\b/g,' 2 ').replace(/\btres\b/g,' 3 ').replace(/\btrês\b/g,' 3 ').replace(/\bquatro\b/g,' 4 ').replace(/\bcinco\b/g,' 5 ').replace(/\bseis\b/g,' 6 ').replace(/\bsete\b/g,' 7 ').replace(/\boito\b/g,' 8 ').replace(/\bnove\b/g,' 9 ').replace(/\s+/g,' ').trim();
+}
+
+renderHome();
+</script>
+</body>
+</html>
