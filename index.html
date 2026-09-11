@@ -39,7 +39,7 @@ function jsonp(params){
     const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
     const script=document.createElement('script');
     const qs=new URLSearchParams({...params,callback:cb});
-    const timer=setTimeout(()=>{cleanup();reject(new Error('Tempo esgotado ao consultar a planilha.'))},15000);
+    const timer=setTimeout(()=>{cleanup();reject(new Error('Tempo esgotado ao consultar a planilha.'))},30000);
     function cleanup(){clearTimeout(timer);delete window[cb];script.remove()}
     window[cb]=data=>{cleanup();resolve(data)}
     script.onerror=()=>{cleanup();reject(new Error('Não foi possível conectar à API.'))};
@@ -219,13 +219,47 @@ function renderStock(){
   </section><section id="stockList" class="panel"><div style="color:#789;font-size:13px">Digite para consultar.</div></section>`;
 }
 let stockTimer;
+let stockRequestId = 0;
 async function searchStock(q){
- clearTimeout(stockTimer);const box=$('stockSug'),list=$('stockList');
- if(!q.trim()){box.style.display='none';list.innerHTML='<div style="color:#789;font-size:13px">Digite para consultar.</div>';return}
+ clearTimeout(stockTimer);
+ const box=$('stockSug'),list=$('stockList');
+ const term=q.trim();
+
+ if(!term){
+   stockRequestId++;
+   box.style.display='none';
+   list.innerHTML='<div style="color:#789;font-size:13px">Digite para consultar.</div>';
+   return;
+ }
+
+ // Evita consultas desnecessárias enquanto o usuário ainda está digitando.
+ if(term.length < 2){
+   box.style.display='none';
+   return;
+ }
+
+ const requestId = ++stockRequestId;
+
  stockTimer=setTimeout(async()=>{
-  try{const r=await jsonp({action:'products',q});if(!r.ok)throw new Error(r.error);
-   list.innerHTML=r.products.map(p=>`<div class="order-item" style="margin-bottom:8px"><div class="row"><div><b>${esc(p.description)}</b><br><small>${esc(p.code)} • ${esc(p.brand||'')}</small></div><b>${esc(p.stock)} ${esc(p.unit)}</b></div></div>`).join('')||'<div>Nenhum material.</div>';
-  }catch(e){toast(e.message)}
+  try{
+   const r=await jsonp({action:'products',q:term});
+
+   // Se uma consulta mais nova já foi iniciada, ignora esta resposta.
+   if(requestId !== stockRequestId) return;
+
+   if(!r.ok) throw new Error(r.error);
+
+   const products = Array.isArray(r.products) ? r.products : [];
+
+   list.innerHTML = products.length
+    ? products.map(p=>`<div class="order-item" style="margin-bottom:8px"><div class="row"><div><b>${esc(p.description)}</b><br><small>${esc(p.code)} • ${esc(p.brand||'')}</small></div><b>${esc(p.stock)} ${esc(p.unit)}</b></div></div>`).join('')
+    : '<div style="color:#789;font-size:13px">Nenhum material encontrado.</div>';
+
+  }catch(e){
+   // Nunca apaga uma lista válida por causa de uma resposta antiga/erro transitório.
+   if(requestId !== stockRequestId) return;
+   toast(e.message);
+  }
  },250);
 }
 
