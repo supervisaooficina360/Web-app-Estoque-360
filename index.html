@@ -27,6 +27,7 @@ button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh}.top{heigh
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbz6Wny7M5SlROez5SPKzxk3w49BU91y9eEiBe7fMXNSKAeCkf0uqUbq34Yy36uoWlBN/exec';
 const state = {page:'home', items:[], order:null, returnItems:[], voice:null};
+const OBSERVACOES = ['Para tarefa externa','Para uso da oficina','Para enrolamento de motor','Para uso em OS','Para uso da automação','Para tarefa interna','Para vendas','Para uso na peritagem'];
 
 const $ = id => document.getElementById(id);
 function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -116,17 +117,23 @@ function renderBaixa(kind){
 }
 
 let searchTimer;
+let materialRequestId = 0;
 async function searchMaterial(q){
   clearTimeout(searchTimer);
   const box=$('suggestions');
-  if(!q.trim()){box.style.display='none';return}
+  const term=q.trim();
+  if(!term){materialRequestId++;box.style.display='none';return}
+  if(term.length<2){box.style.display='none';return}
+  const requestId=++materialRequestId;
   searchTimer=setTimeout(async()=>{
     try{
-      const r=await jsonp({action:'products',q});
+      const r=await jsonp({action:'products',q:term});
+      if(requestId!==materialRequestId) return;
       if(!r.ok) throw new Error(r.error);
-      box.innerHTML=r.products.map(p=>`<button class="suggestion" onclick='addItem(${JSON.stringify(p)})'><span><b>${esc(p.code)}</b><small>${esc(p.description)}</small></span><span class="stock">Est.: ${esc(p.stock)}<br>${esc(p.unit)}</span></button>`).join('')||'<div class="suggestion">Nenhum material encontrado.</div>';
+      const products=Array.isArray(r.products)?r.products:[];
+      box.innerHTML=products.map(p=>`<button class="suggestion" onclick='addItem(${JSON.stringify(p)})'><span><b>${esc(p.code)}</b><small>${esc(p.description)}</small></span><span class="stock">Est.: ${esc(p.stock)}<br>${esc(p.unit)}</span></button>`).join('')||'<div class="suggestion">Nenhum material encontrado.</div>';
       box.style.display='block';
-    }catch(e){toast(e.message)}
+    }catch(e){if(requestId!==materialRequestId)return;toast(e.message)}
   },250);
 }
 
@@ -144,7 +151,7 @@ function renderItems(){
    <div class="item">
     <div class="itemtop"><span class="num">${i+1}</span><div class="desc">${esc(p.description)}</div><button class="remove" onclick="removeItem(${i})">🗑</button></div>
     <div class="itemmeta">${esc(p.code)} • Estoque: ${esc(p.stock)} ${esc(p.unit)}</div>
-    <div class="itembottom"><input class="qty" type="number" min="0.001" step="any" value="${esc(p.qty)}" onchange="state.items[${i}].qty=Number(this.value)"><input class="input" style="height:40px" placeholder="Observação (opcional)" value="${esc(p.note)}" onchange="state.items[${i}].note=this.value"></div>
+    <div class="itembottom"><input class="qty" type="number" min="0.001" step="any" value="${esc(p.qty)}" onchange="state.items[${i}].qty=Number(this.value)"><select class="input" style="height:40px" onchange="state.items[${i}].note=this.value"><option value="">Observação</option>${OBSERVACOES.map(o=>`<option value="${esc(o)}" ${p.note===o?'selected':''}>${esc(o)}</option>`).join('')}</select></div>
    </div>`).join('');
   $('summary').textContent=`${state.items.length} material(is) selecionado(s). Confira as quantidades antes de confirmar.`;
 }
