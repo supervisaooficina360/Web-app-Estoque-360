@@ -170,7 +170,8 @@ async function doBaixa(kind,number,receiver){
  closeModal();toast('Enviando para a planilha...');
  const tx='WEB-'+Date.now()+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
  try{
-   const r=await post({action:'baixa',tx,type:kind,number,receiver,items:state.items.map(x=>({code:x.code,qty:Number(x.qty),unit:x.unit,note:x.note}))});
+   const apiType=kind==='task'?'tarefa':'os';
+   const r=await post({action:'baixa',tx,type:apiType,number,receiver,items:state.items.map(x=>({code:x.code,qty:Number(x.qty),unit:x.unit,note:x.note}))});
    openModal(`<h3>✓ Baixa realizada</h3><div class="status">${esc(r.message||'Operação concluída.')}</div><button class="primary" onclick="closeModal();nav('${kind}')">NOVA BAIXA</button>`);
  }catch(e){openModal(`<h3>Não foi possível concluir</h3><div class="status err">${esc(e.message)}</div><button class="secondary" onclick="closeModal()">FECHAR</button>`)}
 }
